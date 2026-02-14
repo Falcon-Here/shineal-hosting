@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shineal Host - Sign Up & Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #050508;
+            --purple-primary: #6b21a8;
+            --purple-light: #9333ea;
+            --purple-accent: #a855f7;
+            --text-primary: #ffffff;
+            --text-secondary: #a0aec0;
+            --border-color: #2d1b4e;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a0d2e 50%, var(--bg-darker) 100%);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Navigation Header */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--purple-light), var(--purple-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-back {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-back:hover {
+            color: var(--purple-light);
+        }
+
+        /* Main Container */
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+            margin-top: 5rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Form Container */
+        .form-container {
+            background: linear-gradient(135deg, rgba(26, 13, 46, 0.9), rgba(45, 27, 78, 0.6));
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.1), transparent);
+            border-radius: 50%;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        .form-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--purple-light);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.2);
+        }
+
+        /* Error Message */
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        input.error {
+            border-color: var(--error-color);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        /* Success Message */
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Buttons */
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-light), var(--purple-accent));
+            color: white;
+            box-shadow: 0 4px 25px rgba(147, 51, 234, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(147, 51, 234, 0.6);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-toggle {
+            background: transparent;
+            color: var(--purple-light);
+            border: 1.5px solid var(--purple-light);
+            margin-top: 1.5rem;
+        }
+
+        .btn-toggle:hover {
+            background: rgba(147, 51, 234, 0.1);
+            border-color: var(--purple-accent);
+            color: var(--purple-accent);
+        }
+
+        /* Toggle Text */
+        .toggle-text {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .toggle-text span {
+            color: var(--purple-light);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-text span:hover {
+            color: var(--purple-accent);
+        }
+
+        /* Hidden Form */
+        .form-hidden {
+            display: none;
+        }
+
+        /* Loading State */
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Social Login */
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-btn {
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-btn:hover {
+            border-color: var(--purple-light);
+            background: rgba(147, 51, 234, 0.1);
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+            accent-color: var(--purple-light);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .checkbox-group a {
+            color: var(--purple-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .checkbox-group a:hover {
+            color: var(--purple-accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .auth-container {
+                margin-top: 7rem;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        .form-content {
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">Shineal Host</a>
+        <a href="index.html" class="nav-back">← Back to Home</a>
+    </nav>
+
+    <!-- Auth Container -->
+    <div class="auth-container">
+        <!-- SIGNUP FORM (Default) -->
+        <div class="form-container" id="signupForm">
+            <div class="form-content">
+                <div class="form-header">
+                    <h1>Create Account</h1>
+                    <p>Join Shineal Host and start hosting today</p>
+                </div>
+
+                <div class="success-message" id="signupSuccess">
+                    ✓ Account created successfully! Redirecting to login...
+                </div>
+
+                <form id="signupFormElement" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" name="fullName" placeholder="John Doe" required>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" name="email" placeholder="you@example.com" required>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" name="password" placeholder="At least 8 characters" required minlength="8">
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" name="confirmPassword" placeholder="Confirm your password" required>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="signup-terms" name="terms" required>
+                        <label for="signup-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn" onclick="toggleToLogin()">🔐 Use Login Instead</button>
+                    <button class="social-btn" onclick="toggleToLogin()">Continue with GitHub</button>
+                </div>
+
+                <div class="toggle-text">
+                    Already have an account? <span onclick="toggleToLogin()">Sign In</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGIN FORM (Hidden by default) -->
+        <div class="form-container form-hidden" id="loginForm">
+            <div class="form-content">
+                <div class="form-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your Shineal Host account</p>
+                </div>
+
+                <div class="success-message" id="loginSuccess">
+                    ✓ Login successful! Redirecting...
+                </div>
+
+                <form id="loginFormElement" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" name="email" placeholder="you@example.com" required>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+                        <div class="error-message"></div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="login-remember" name="remember">
+                        <label for="login-remember">Remember me</label>
+                        <a href="#" style="margin-left: auto;">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </form>
+
+                <div class="divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button class="social-btn" onclick="toggleToSignup()">🔐 Create Account</button>
+                    <button class="social-btn" onclick="toggleToSignup()">Continue with GitHub</button>
+                </div>
+
+                <div class="toggle-text">
+                    Don't have an account? <span onclick="toggleToSignup()">Sign Up</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between signup and login
+        function toggleToLogin() {
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            
+            signupForm.classList.add('form-hidden');
+            loginForm.classList.remove('form-hidden');
+            
+            // Reset forms
+            document.getElementById('signupFormElement').reset();
+            document.getElementById('loginFormElement').reset();
+            clearErrors();
+        }
+
+        function toggleToSignup() {
+            const signupForm = document.getElementById('signupForm');
+            const loginForm = document.getElementById('loginForm');
+            
+            loginForm.classList.add('form-hidden');
+            signupForm.classList.remove('form-hidden');
+            
+            // Reset forms
+            document.getElementById('signupFormElement').reset();
+            document.getElementById('loginFormElement').reset();
+            clearErrors();
+        }
+
+        // Clear all error messages
+        function clearErrors() {
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.remove('show');
+                msg.textContent = '';
+            });
+            document.querySelectorAll('input').forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+
+        // Show error message
+        function showError(inputId, message) {
+            const input = document.getElementById(inputId);
+            const errorMsg = input.parentElement.querySelector('.error-message');
+            input.classList.add('error');
+            errorMsg.textContent = message;
+            errorMsg.classList.add('show');
+        }
+
+        // Validate email format
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Handle Signup
+        async function handleSignup(event) {
+            event.preventDefault();
+            clearErrors();
+
+            const fullName = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            const terms = document.getElementById('signup-terms').checked;
+
+            let hasError = false;
+
+            // Validation
+            if (fullName.length < 2) {
+                showError('signup-name', 'Full name must be at least 2 characters');
+                hasError = true;
+            }
+
+            if (!isValidEmail(email)) {
+                showError('signup-email', 'Please enter a valid email address');
+                hasError = true;
+            }
+
+            if (password.length < 8) {
+                showError('signup-password', 'Password must be at least 8 characters');
+                hasError = true;
+            }
+
+            if (password !== confirmPassword) {
+                showError('signup-confirm', 'Passwords do not match');
+                hasError = true;
+            }
+
+            if (!terms) {
+                showError('signup-terms', 'You must agree to the terms');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // Send to server
+            try {
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="loading"></span>Creating account...';
+
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        fullName,
+                        email,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Signup failed');
+                }
+
+                // Show success message
+                document.getElementById('signupSuccess').classList.add('show');
+                
+                // Redirect to login after 2 seconds
+                setTimeout(() => {
+                    toggleToLogin();
+                    document.getElementById('signupSuccess').classList.remove('show');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Create Account';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('signup-email', error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Create Account';
+            }
+        }
+
+        // Handle Login
+        async function handleLogin(event) {
+            event.preventDefault();
+            clearErrors();
+
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            const remember = document.getElementById('login-remember').checked;
+
+            let hasError = false;
+
+            // Validation
+            if (!isValidEmail(email)) {
+                showError('login-email', 'Please enter a valid email address');
+                hasError = true;
+            }
+
+            if (password.length < 8) {
+                showError('login-password', 'Password must be at least 8 characters');
+                hasError = true;
+            }
+
+            if (hasError) return;
+
+            // Send to server
+            try {
+                const submitBtn = event.target.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="loading"></span>Signing in...';
+
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        password,
+                        remember
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Login failed');
+                }
+
+                // Store token if provided
+                if (data.token) {
+                    localStorage.setItem('authToken', data.token);
+                }
+
+                // Show success message
+                document.getElementById('loginSuccess').classList.add('show');
+                
+                // Redirect to dashboard after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/dashboard.html';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Login error:', error);
+                showError('login-email', error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Sign In';
+            }
+        }
+
+        // Allow clicking on form elements to trigger toggle
+        document.getElementById('signupForm').addEventListener('click', function(e) {
+            // Don't toggle if clicking on form inputs or buttons
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+                return;
+            }
+        });
+
+        document.getElementById('loginForm').addEventListener('click', function(e) {
+            // Don't toggle if clicking on form inputs or buttons
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+                return;
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
+</html>

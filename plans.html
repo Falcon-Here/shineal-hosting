@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shineal Hosting - Advanced Plans</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+        :root {
+            --bg-color: #0a1a2e;
+            --card-bg: #0d2847;
+            --primary-color: #00d4ff;
+            --secondary-color: #00a8ff;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --gradient-blue: linear-gradient(135deg, #00d4ff 0%, #00a8ff 100%);
+            --gradient-dark: linear-gradient(135deg, #0d2847 0%, #0a1a2e 100%);
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: var(--gradient-blue);
+            border-radius: 5px;
+        }
+
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .plan-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease-in-out;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .plan-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 0;
+        }
+
+        .plan-card:hover::before {
+            opacity: 1;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg) scale(1.03);
+            border-color: var(--primary-color);
+            box-shadow: 0 25px 60px rgba(0, 212, 255, 0.3);
+            z-index: 1;
+        }
+
+        .plan-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-icon {
+            font-size: 3.5rem;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .plan-name {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--heading-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .plan-price {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        .plan-price span {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-left: 0.5rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+            color: var(--text-color);
+        }
+
+        .plan-features li i {
+            color: #4CAF50; /* Green checkmark */
+            font-size: 1.2rem;
+        }
+
+        .plan-button {
+            display: block;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            background: var(--gradient-blue);
+            color: var(--heading-color);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+            cursor: pointer;
+            border: none;
+        }
+
+        .plan-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.5);
+            filter: brightness(1.1);
+        }
+
+        /* Category specific styling */
+        .kvm-vps-section .plan-card { border-color: rgba(255, 0, 0, 0.2); }
+        .kvm-vps-section .plan-card:hover { border-color: #FF0000; box-shadow: 0 25px 60px rgba(255, 0, 0, 0.3); }
+        .kvm-vps-section .plan-icon, .kvm-vps-section .plan-price { background: linear-gradient(135deg, #FF0000 0%, #FF4500 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .kvm-vps-section .plan-button { background: linear-gradient(135deg, #FF0000 0%, #FF4500 100%); box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3); }
+
+        .samp-section .plan-card { border-color: rgba(0, 255, 0, 0.2); }
+        .samp-section .plan-card:hover { border-color: #00FF00; box-shadow: 0 25px 60px rgba(0, 255, 0, 0.3); }
+        .samp-section .plan-icon, .samp-section .plan-price { background: linear-gradient(135deg, #00FF00 0%, #32CD32 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .samp-section .plan-button { background: linear-gradient(135deg, #00FF00 0%, #32CD32 100%); box-shadow: 0 8px 20px rgba(0, 255, 0, 0.3); }
+
+        .mta-section .plan-card { border-color: rgba(255, 255, 0, 0.2); }
+        .mta-section .plan-card:hover { border-color: #FFFF00; box-shadow: 0 25px 60px rgba(255, 255, 0, 0.3); }
+        .mta-section .plan-icon, .mta-section .plan-price { background: linear-gradient(135deg, #FFFF00 0%, #FFD700 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .mta-section .plan-button { background: linear-gradient(135deg, #FFFF00 0%, #FFD700 100%); box-shadow: 0 8px 20px rgba(255, 255, 0, 0.3); }
+
+        .discord-hosting-section .plan-card { border-color: rgba(114, 137, 218, 0.2); }
+        .discord-hosting-section .plan-card:hover { border-color: #7289DA; box-shadow: 0 25px 60px rgba(114, 137, 218, 0.3); }
+        .discord-hosting-section .plan-icon, .discord-hosting-section .plan-price { background: linear-gradient(135deg, #7289DA 0%, #6A5ACD 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .discord-hosting-section .plan-button { background: linear-gradient(135deg, #7289DA 0%, #6A5ACD 100%); box-shadow: 0 8px 20px rgba(114, 137, 218, 0.3); }
+
+        .web-hosting-section .plan-card { border-color: rgba(255, 165, 0, 0.2); }
+        .web-hosting-section .plan-card:hover { border-color: #FFA500; box-shadow: 0 25px 60px rgba(255, 165, 0, 0.3); }
+        .web-hosting-section .plan-icon, .web-hosting-section .plan-price { background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .web-hosting-section .plan-button { background: linear-gradient(135deg, #FFA500 0%, #FF8C00 100%); box-shadow: 0 8px 20px rgba(255, 165, 0, 0.3); }
+
+        .domain-section .plan-card { border-color: rgba(128, 0, 128, 0.2); }
+        .domain-section .plan-card:hover { border-color: #800080; box-shadow: 0 25px 60px rgba(128, 0, 128, 0.3); }
+        .domain-section .plan-icon, .domain-section .plan-price { background: linear-gradient(135deg, #800080 0%, #DA70D6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .domain-section .plan-button { background: linear-gradient(135deg, #800080 0%, #DA70D6 100%); box-shadow: 0 8px 20px rgba(128, 0, 128, 0.3); }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .section-title { font-size: 2.5rem; }
+            .plan-card { padding: 2rem; }
+            .plan-name { font-size: 1.8rem; }
+            .plan-price { font-size: 2.2rem; }
+            .plan-features li { font-size: 0.95rem; }
+        }
+
+        @media (max-width: 480px) {
+            .section-title { font-size: 2rem; }
+            .plan-card { padding: 1.5rem; }
+            .plan-name { font-size: 1.5rem; }
+            .plan-price { font-size: 1.8rem; }
+            .plan-features li { font-size: 0.9rem; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .model-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #1a3a5a, #0a1a2e);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: rgba(0, 212, 255, 0.5);
+            border: 1px dashed rgba(0, 212, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-placeholder::before {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        .model-placeholder i {
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        .plan-card:hover .plan-card-content { transform: translateZ(20px); }
+        .plan-card:hover .plan-icon { transform: translateZ(30px) scale(1.1); }
+        .plan-card:hover .plan-name { transform: translateZ(25px); }
+        .plan-card:hover .plan-price { transform: translateZ(25px); }
+        .plan-card:hover .plan-features li { transform: translateZ(15px); }
+        .plan-card:hover .plan-button { transform: translateZ(35px) translateY(-5px); }
+
+        .filter-dropdown {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .filter-dropdown select {
+            background: var(--card-bg);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-right: 3rem;
+        }
+
+        .filter-dropdown select:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .filter-dropdown .select-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .filter-dropdown .select-wrapper::after {
+            content: "\f078";
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container py-16">
+        <h1 class="section-title reveal">Our Advanced Hosting Plans</h1>
+
+        <div class="filter-dropdown reveal">
+            <div class="select-wrapper">
+                <select id="planFilter" onchange="filterPlans(this.value)">
+                    <option value="all">Show All Categories</option>
+                    <option value="kvm-vps">KVM-VPS</option>
+                    <option value="samp">SAMP Hosting</option>
+                    <option value="mta">MTA Hosting</option>
+                    <option value="discord-hosting">Discord Hosting</option>
+                    <option value="web-hosting">Web Hosting</option>
+                    <option value="domain">Domain Registration</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- KVM-VPS Section -->
+        <section id="kvm-vps-section" class="mb-16 kvm-vps-section plan-category">
+            <h2 class="text-4xl font-bold text-center mb-12 text-red-500 reveal">KVM-VPS <i class="fas fa-server"></i></h2>
+            <div class="model-placeholder reveal"><i class="fas fa-cube"></i> KVM-VPS Model</div>
+            <div class="plan-grid">
+                <!-- KVM-VPS Plan 1 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-microchip"></i></div>
+                        <h3 class="plan-name">KVM-VPS Bronze</h3>
+                        <p class="text-center text-gray-400 mb-4">Entry-level KVM virtualization for personal projects.</p>
+                        <div class="plan-price">$7<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 4 vCPU Cores</li>
+                            <li><i class="fas fa-check-circle"></i> 8GB DDR4 RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 60GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unliminated Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> 1Gbit/s Uplink</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('KVM-VPS Bronze', '7', 'KVM-VPS')">Order Now</button>
+                    </div>
+                </div>
+                <!-- KVM-VPS Plan 2 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-cogs"></i></div>
+                        <h3 class="plan-name">KVM-VPS Silver</h3>
+                        <p class="text-center text-gray-400 mb-4">Balanced performance for small applications.</p>
+                        <div class="plan-price">$11<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 6 vCPU Cores</li>
+                            <li><i class="fas fa-check-circle"></i> 12GB DDR4 RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 100GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unliminated Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> 1Gbit/s Uplink</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('KVM-VPS Silver', '11', 'KVM-VPS')">Order Now</button>
+                    </div>
+                </div>
+                <!-- KVM-VPS Plan 3 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        <h3 class="plan-name">KVM-VPS Gold</h3>
+                        <p class="text-center text-gray-400 mb-4">High-speed VPS for growing websites and services.</p>
+                        <div class="plan-price">$17<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 8 vCPU Cores</li>
+                            <li><i class="fas fa-check-circle"></i> 24GB DDR4 RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 200GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unliminated Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> 1.5 Gbit/s Uplink</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced DDoS Protection</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('KVM-VPS Gold', '17', 'KVM-VPS')">Order Now</button>
+                    </div>
+                </div>
+                <!-- KVM-VPS Plan 4 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-rocket"></i></div>
+                        <h3 class="plan-name">KVM-VPS Platinum</h3>
+                        <p class="text-center text-gray-400 mb-4">Premium performance for demanding applications.</p>
+                        <div class="plan-price">$26<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 12 vCPU Cores</li>
+                            <li><i class="fas fa-check-circle"></i> 48GB DDR4 RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 300GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unliminated Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> 2 Gbit/s Uplink</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('KVM-VPS Platinum', '26', 'KVM-VPS')">Order Now</button>
+                    </div>
+                </div>
+                <!-- KVM-VPS Plan 5 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-bolt"></i></div>
+                        <h3 class="plan-name">KVM-VPS Diamond</h3>
+                        <p class="text-center text-gray-400 mb-4">Enterprise-grade power and reliability.</p>
+                        <div class="plan-price">$99.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 16 vCPU Cores</li>
+                            <li><i class="fas fa-check-circle"></i> 6GB DDR4 RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 350GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unliminated Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> 2.5 Gbit/s Uplink</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('KVM-VPS Diamond', '99.99', 'KVM-VPS')">Order Now</button>
+                    </div>
+                </div>
+                <!-- KVM-VPS Plan 6 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-crown"></i></div>
+                        <h3 class="plan-name">KVM-VPS Ultimate</h3>
+                        <p class="text-center text-gray-400 mb-4">The ultimate KVM solution for critical infrastructure.</p>
+                        <div class="plan-price">$149.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 24 vCPU Cores</li>
+                            <li><i class="fas fa-check-circle"></i> 96GB DDR4 RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 400GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unliminated Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> 3 Gbit/s Uplink</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('KVM-VPS Ultimate', '149.99', 'KVM-VPS')">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SAMP Hosting Section -->
+        <section id="samp-section" class="mb-16 samp-section plan-category hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-green-500 reveal">SAMP Hosting <i class="fas fa-gamepad"></i></h2>
+            <div class="model-placeholder reveal"><i class="fas fa-users"></i> SAMP Server Model</div>
+            <div class="plan-grid">
+                <!-- SAMP Plan 1 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-user-friends"></i></div>
+                        <h3 class="plan-name">SAMP Starter</h3>
+                        <p class="text-center text-gray-400 mb-4">Begin your SAMP adventure with ease.</p>
+                        <div class="plan-price">$7.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 150 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 2GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 1GB SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('SAMP Starter', '7.99', 'SAMP')">Order Now</button>
+                    </div>
+                </div>
+                <!-- SAMP Plan 2 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-globe"></i></div>
+                        <h3 class="plan-name">SAMP Community</h3>
+                        <p class="text-center text-gray-400 mb-4">Host a vibrant SAMP community server.</p>
+                        <div class="plan-price">$14.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 500 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 4GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 2GB SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('SAMP Community', '14.99', 'SAMP')">Order Now</button>
+                    </div>
+                </div>
+                <!-- SAMP Plan 3 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-star"></i></div>
+                        <h3 class="plan-name">SAMP Pro</h3>
+                        <p class="text-center text-gray-400 mb-4">Optimized for larger and more active servers.</p>
+                        <div class="plan-price">$24.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 750 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 6GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 3GB NVMe SSD</li>
+                           <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('SAMP Pro', '24.99', 'SAMP')">Order Now</button>
+                    </div>
+                </div>
+                <!-- SAMP Plan 4 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-trophy"></i></div>
+                        <h3 class="plan-name">SAMP Elite</h3>
+                        <p class="text-center text-gray-400 mb-4">The ultimate SAMP experience for competitive play.</p>
+                        <div class="plan-price">$39.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1000 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 8GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 5GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('SAMP Elite', '39.99', 'SAMP')">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MTA Hosting Section -->
+        <section id="mta-section" class="mb-16 mta-section plan-category hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-yellow-500 reveal">MTA Hosting <i class="fas fa-car"></i></h2>
+            <div class="model-placeholder reveal"><i class="fas fa-road"></i> MTA Server Model</div>
+            <div class="plan-grid">
+                <!-- MTA Plan 1 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-gamepad"></i></div>
+                        <h3 class="plan-name">MTA Starter</h3>
+                        <p class="text-center text-gray-400 mb-4">Get your MTA server up and running.</p>
+                        <div class="plan-price">$8.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 150 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 2GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 1GB SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('MTA Starter', '8.99', 'MTA')">Order Now</button>
+                    </div>
+                </div>
+                <!-- MTA Plan 2 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-users"></i></div>
+                        <h3 class="plan-name">MTA Community</h3>
+                        <p class="text-center text-gray-400 mb-4">Build a thriving MTA community.</p>
+                        <div class="plan-price">$16.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 500 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 4GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 2GB SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('MTA Community', '16.99', 'MTA')">Order Now</button>
+                    </div>
+                </div>
+                <!-- MTA Plan 3 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-star"></i></div>
+                        <h3 class="plan-name">MTA Pro</h3>
+                        <p class="text-center text-gray-400 mb-4">Optimized for larger and more active servers.</p>
+                        <div class="plan-price">$27.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 750 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 6GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 3GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('MTA Pro', '27.99', 'MTA')">Order Now</button>
+                    </div>
+                </div>
+                <!-- MTA Plan 4 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-trophy"></i></div>
+                        <h3 class="plan-name">MTA Elite</h3>
+                        <p class="text-center text-gray-400 mb-4">The ultimate MTA experience for competitive play.</p>
+                        <div class="plan-price">$44.99<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1000 Player Slots</li>
+                            <li><i class="fas fa-check-circle"></i> 8GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 5GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Network: 1GBs/s</li>
+                            <li><i class="fas fa-check-circle"></i> Mysql: x1</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('MTA Elite', '44.99', 'MTA')">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Discord Hosting Section -->
+        <section id="discord-hosting-section" class="mb-16 discord-hosting-section plan-category hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-indigo-400 reveal">Discord Hosting <i class="fab fa-discord"></i></h2>
+            <div class="model-placeholder reveal"><i class="fab fa-discord"></i> Discord Bot Model</div>
+            <div class="plan-grid">
+                <!-- Discord Hosting Plan 1 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-robot"></i></div>
+                        <h3 class="plan-name">Bot Basic</h3>
+                        <p class="text-center text-gray-400 mb-4">Host your Discord bot reliably.</p>
+                        <div class="plan-price">$1<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 100% CPU</li>
+                            <li><i class="fas fa-check-circle"></i> 1GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 5GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Uptime</li>
+                            <li><i class="fas fa-check-circle"></i> Node.js/Python Support</li>
+                            <li><i class="fas fa-check-circle"></i> Easy Deployment</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Bot Basic', '1', 'Discord')">Order Now</button>
+                    </div>
+                </div>
+                <!-- Discord Hosting Plan 2 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-cogs"></i></div>
+                        <h3 class="plan-name">Bot Advanced</h3>
+                        <p class="text-center text-gray-400 mb-4">For complex bots and multiple instances.</p>
+                        <div class="plan-price">$2<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 200% CPU</li>
+                            <li><i class="fas fa-check-circle"></i> 2GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 10GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Dedicated Resources</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced Monitoring</li>
+                            <li><i class="fas fa-check-circle"></i> Priority Support</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Bot Advanced', '2', 'Discord')">Order Now</button>
+                    </div>
+                </div>
+                <!-- Discord Hosting Plan 3 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-globe"></i></div>
+                        <h3 class="plan-name">Bot Enterprise</h3>
+                        <p class="text-center text-gray-400 mb-4">Scalable hosting for large-scale Discord projects.</p>
+                        <div class="plan-price">$3<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 300% CPU</li>
+                            <li><i class="fas fa-check-circle"></i> 3GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 15GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> High Availability</li>
+                            <li><i class="fas fa-check-circle"></i> Custom Environment</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Dedicated Support</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Bot Enterprise', '3', 'Discord')">Order Now</button>
+                    </div>
+                </div>
+                <!-- Discord Hosting Plan 4 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-infinity"></i></div>
+                        <h3 class="plan-name">Bot Ultimate</h3>
+                        <p class="text-center text-gray-400 mb-4">Unleash unlimited potential for your Discord bot.</p>
+                        <div class="plan-price">$4<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 400% CPU</li>
+                            <li><i class="fas fa-check-circle"></i> 4GB RAM</li>
+                            <li><i class="fas fa-check-circle"></i> 20GB NVMe SSD</li>
+                            <li><i class="fas fa-check-circle"></i> Unlimited Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced Security</li>
+                            <li><i class="fas fa-check-circle"></i> Custom Integrations</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Bot Ultimate', '4', 'Discord')">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Web Hosting Section -->
+        <section id="web-hosting-section" class="mb-16 web-hosting-section plan-category hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-orange-500 reveal">Web Hosting <i class="fas fa-globe-americas"></i></h2>
+            <div class="model-placeholder reveal"><i class="fas fa-code"></i> Web Hosting Model</div>
+            <div class="plan-grid">
+                <!-- Web Hosting Plan 1 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                        <h3 class="plan-name">Web Starter</h3>
+                        <p class="text-center text-gray-400 mb-4">Launch your personal website or blog.</p>
+                        <div class="plan-price">$1<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Website</li>
+                            <li><i class="fas fa-check-circle"></i> 1GB SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Unmetered Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> Free SSL Certificate</li>
+                            <li><i class="fas fa-check-circle"></i> 1-Click Installer</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Basic Support</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Web Starter', '1', 'Web')">Order Now</button>
+                    </div>
+                </div>
+                <!-- Web Hosting Plan 2 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-briefcase"></i></div>
+                        <h3 class="plan-name">Web Business</h3>
+                        <p class="text-center text-gray-400 mb-4">Powerful hosting for growing businesses.</p>
+                        <div class="plan-price">$2<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Unlimited Websites</li>
+                            <li><i class="fas fa-check-circle"></i> 2GB SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Unmetered Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain for 1 Year</li>
+                            <li><i class="fas fa-check-circle"></i> Daily Backups</li>
+                            <li><i class="fas fa-check-circle"></i> Priority Support</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Web Business', '2', 'Web')">Order Now</button>
+                    </div>
+                </div>
+                <!-- Web Hosting Plan 3 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-building"></i></div>
+                        <h3 class="plan-name">Web Enterprise</h3>
+                        <p class="text-center text-gray-400 mb-4">Optimized for high-traffic corporate sites.</p>
+                        <div class="plan-price">$3<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Unlimited Websites</li>
+                            <li><i class="fas fa-check-circle"></i> 3GB NVMe SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Unmetered Bandwidth</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced Security Suite</li>
+                            <li><i class="fas fa-check-circle"></i> Dedicated IP Address</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Expert Support</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Web Enterprise', '3', 'Web')">Order Now</button>
+                    </div>
+                </div>
+                <!-- Web Hosting Plan 4 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3 class="plan-name">Web Ultimate</h3>
+                        <p class="text-center text-gray-400 mb-4">Maximum performance and scalability for web projects.</p>
+                        <div class="plan-price">$4<span>/month</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> Unlimited Websites</li>
+                            <li><i class="fas fa-check-circle"></i> 4GB NVMe SSD Storage</li>
+                            <li><i class="fas fa-check-circle"></i> Premium CDN Integration</li>
+                            <li><i class="fas fa-check-circle"></i> Advanced Caching</li>
+                            <li><i class="fas fa-check-circle"></i> 24/7 Dedicated Support</li>
+                            <li><i class="fas fa-check-circle"></i> Free Migration</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('Web Ultimate', '4', 'Web')">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Domain Registration Section -->
+        <section id="domain-section" class="mb-16 domain-section plan-category hidden">
+            <h2 class="text-4xl font-bold text-center mb-12 text-purple-500 reveal">Domain Registration <i class="fas fa-globe"></i></h2>
+            <div class="model-placeholder reveal"><i class="fas fa-search"></i> Domain Search Model</div>
+            <div class="plan-grid">
+                <!-- Domain Plan 1 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.com Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">The most popular choice for global reach.</p>
+                        <div class="plan-price">$12.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.com Domain', '12.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 2 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.net Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">A reliable alternative for networks and tech.</p>
+                        <div class="plan-price">$14.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.net Domain', '14.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 3 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.org Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">Ideal for non-profit organizations.</p>
+                        <div class="plan-price">$11.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.org Domain', '11.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 4 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.info Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">For informational websites and resources.</p>
+                        <div class="plan-price">$9.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.info Domain', '9.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 5 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.biz Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">Perfect for businesses and commercial ventures.</p>
+                        <div class="plan-price">$15.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.biz Domain', '15.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 6 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.xyz Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">A versatile and modern domain for any purpose.</p>
+                        <div class="plan-price">$1.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.xyz Domain', '1.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 7 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.online Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">Establish your presence online with this popular TLD.</p>
+                        <div class="plan-price">$2.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.online Domain', '2.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 8 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.store Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">Perfect for e-commerce and online shops.</p>
+                        <div class="plan-price">$5.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.store Domain', '5.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 9 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.tech Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">Showcase your technology brand or startup.</p>
+                        <div class="plan-price">$6.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.tech Domain', '6.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+                <!-- Domain Plan 10 -->
+                <div class="plan-card reveal">
+                    <div class="plan-card-content">
+                        <div class="plan-icon"><i class="fas fa-dot-circle"></i></div>
+                        <h3 class="plan-name">.app Domain</h3>
+                        <p class="text-center text-gray-400 mb-4">Secure and memorable for mobile applications.</p>
+                        <div class="plan-price">$17.99<span>/year</span></div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check-circle"></i> 1 Year Registration</li>
+                            <li><i class="fas fa-check-circle"></i> Free Domain Privacy</li>
+                            <li><i class="fas fa-check-circle"></i> DNS Management</li>
+                            <li><i class="fas fa-check-circle"></i> Email Forwarding</li>
+                        </ul>
+                        <button class="plan-button" onclick="orderPlan('.app Domain', '17.99', 'Domain')">Register Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Simple Scroll Reveal Animation
+        const revealElements = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        revealElements.forEach((el) => observer.observe(el));
+
+        // Parallax effect on cards
+        document.querySelectorAll(".plan-card").forEach(card => {
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * 10;
+                const rotateY = ((x - centerX) / centerX) * -10;
+
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = `translateY(0) rotateX(0deg) rotateY(0deg) scale(1)`;
+            });
+        });
+
+        // Plan Filtering Logic
+        function filterPlans(category) {
+            const planCategories = document.querySelectorAll(".plan-category");
+            planCategories.forEach(section => {
+                if (category === "all" || section.id === category + "-section") {
+                    section.classList.remove("hidden");
+                } else {
+                    section.classList.add("hidden");
+                }
+            });
+        }
+
+        // Order Plan Function
+        function orderPlan(planName, price, category) {
+            const encodedPlan = encodeURIComponent(planName);
+            const encodedCategory = encodeURIComponent(category);
+            window.location.href = `order.html?plan=${encodedPlan}&price=${price}&category=${encodedCategory}`;
+        }
+
+        // Initialize with all plans visible
+        document.addEventListener("DOMContentLoaded", () => {
+            filterPlans("all");
+        });
+
+    </script>
+</body>
+</html>

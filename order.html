@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shineal Hosting - Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+        :root {
+            --bg-color: #0a1a2e;
+            --card-bg: #0d2847;
+            --primary-color: #00d4ff;
+            --secondary-color: #00a8ff;
+            --text-color: #e0e0e0;
+            --heading-color: #ffffff;
+            --gradient-blue: linear-gradient(135deg, #00d4ff 0%, #00a8ff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .checkout-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 1024px) {
+            .checkout-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        /* Order Summary Card */
+        .order-summary {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .order-summary h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            color: var(--heading-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .plan-details {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .plan-details p {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .plan-details p strong {
+            color: var(--heading-color);
+        }
+
+        .plan-details .plan-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .plan-details .plan-category {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-breakdown {
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .pricing-row.total {
+            border-top: 2px solid rgba(0, 212, 255, 0.3);
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .pricing-row.total strong {
+            color: var(--heading-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-direction: column;
+        }
+
+        .btn {
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-blue);
+            color: var(--heading-color);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0, 212, 255, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--heading-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section h3 i {
+            color: var(--primary-color);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            color: var(--heading-color);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            position: relative;
+        }
+
+        .payment-method input[type="radio"] {
+            display: none;
+        }
+
+        .payment-method label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            border: 2px solid rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            margin: 0;
+            gap: 8px;
+        }
+
+        .payment-method input[type="radio"]:checked + label {
+            border-color: var(--primary-color);
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.3);
+        }
+
+        .payment-method label i {
+            font-size: 1.5rem;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: var(--primary-color);
+        }
+
+        .terms-checkbox label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .terms-checkbox a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .terms-checkbox a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-info {
+            background: rgba(0, 212, 255, 0.1);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            color: var(--primary-color);
+        }
+
+        .alert i {
+            font-size: 1.3rem;
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(0, 212, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            color: #4caf50;
+        }
+
+        .success-message i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-message h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="plans.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Plans</a>
+
+        <div class="page-header">
+            <h1 class="page-title">Checkout</h1>
+            <p class="page-subtitle">Complete your order securely</p>
+        </div>
+
+        <div class="checkout-wrapper">
+            <!-- Order Summary (Right Side) -->
+            <div class="order-summary">
+                <h2><i class="fas fa-shopping-cart"></i> Order Summary</h2>
+
+                <div class="plan-details">
+                    <div class="plan-category" id="categoryDisplay">Loading...</div>
+                    <div class="plan-name" id="planNameDisplay">Loading...</div>
+                    <p><strong>Billing Period:</strong> <span id="billingPeriodDisplay">Monthly</span></p>
+                </div>
+
+                <div class="pricing-breakdown">
+                    <div class="pricing-row">
+                        <span>Plan Price:</span>
+                        <strong id="planPriceDisplay">$0.00</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Setup Fee:</span>
+                        <strong>$0.00</strong>
+                    </div>
+                    <div class="pricing-row">
+                        <span>Discount:</span>
+                        <strong id="discountDisplay">$0.00</strong>
+                    </div>
+                    <div class="pricing-row total">
+                        <strong>Total:</strong>
+                        <strong id="totalPriceDisplay">$0.00</strong>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="submitOrder()">
+                        <i class="fas fa-lock"></i> Complete Purchase
+                    </button>
+                    <a href="plans.html" class="btn btn-secondary">
+                        <i class="fas fa-redo"></i> Choose Different Plan
+                    </a>
+                </div>
+            </div>
+
+            <!-- Checkout Form (Left Side) -->
+            <div class="checkout-form">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Your information is secure and encrypted. We accept multiple payment methods.</span>
+                </div>
+
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Personal Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" placeholder="falcon@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="+216 12345678">
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="divider"></div>
+
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h3><i class="fas fa-credit-card"></i> Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method">
+                            <input type="radio" id="paypal" name="payment" value="paypal" checked>
+                            <label for="paypal"><i class="fab fa-paypal"></i> PayPal</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="stripe" name="payment" value="stripe">
+                            <label for="stripe"><i class="fas fa-credit-card"></i> Card</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="crypto" name="payment" value="crypto">
+                            <label for="crypto"><i class="fab fa-bitcoin"></i> Crypto</label>
+                        </div>
+                        <div class="payment-method">
+                            <input type="radio" id="bank" name="payment" value="bank">
+                            <label for="bank"><i class="fas fa-university"></i> Bank</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Terms & Conditions -->
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> *</label>
+                </div>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>Order Placed Successfully!</h2>
+                    <p>Thank you for your purchase. You will receive a confirmation email shortly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Initialize page with plan details
+        function initializePage() {
+            const planName = getUrlParameter('plan') || 'Unknown Plan';
+            const price = getUrlParameter('price') || '0.00';
+            const category = getUrlParameter('category') || 'Unknown';
+
+            // Display plan details
+            document.getElementById('planNameDisplay').textContent = planName;
+            document.getElementById('categoryDisplay').textContent = category + ' Hosting';
+            document.getElementById('planPriceDisplay').textContent = '$' + parseFloat(price).toFixed(2);
+            document.getElementById('totalPriceDisplay').textContent = '$' + parseFloat(price).toFixed(2);
+
+            // Determine billing period based on category
+            const billingPeriod = category === 'Domain' ? 'Yearly' : 'Monthly';
+            document.getElementById('billingPeriodDisplay').textContent = billingPeriod;
+        }
+
+        // Validate form
+        function validateForm() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const zip = document.getElementById('zip').value.trim();
+            const country = document.getElementById('country').value.trim();
+            const terms = document.getElementById('terms').checked;
+
+            if (!firstName || !lastName || !email || !address || !city || !state || !zip || !country) {
+                alert('Please fill in all required fields.');
+                return false;
+            }
+
+            if (!email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+
+            if (!terms) {
+                alert('Please agree to the Terms of Service and Privacy Policy.');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Submit order
+        function submitOrder() {
+            if (!validateForm()) {
+                return;
+            }
+
+            const submitBtn = document.querySelector('.btn-primary');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="loading-spinner"></span> Processing...';
+            submitBtn.disabled = true;
+
+            // Simulate order processing
+            setTimeout(() => {
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    zip: document.getElementById('zip').value,
+                    country: document.getElementById('country').value,
+                    paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+                    plan: getUrlParameter('plan'),
+                    price: getUrlParameter('price'),
+                    category: getUrlParameter('category'),
+                    timestamp: new Date().toISOString()
+                };
+
+                // Log order data (in production, send to backend)
+                console.log('Order Submitted:', formData);
+
+                // Show success message
+                document.querySelector('.checkout-form').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+
+                // Optional: Redirect after 3 seconds
+                setTimeout(() => {
+                    // window.location.href = 'dashboard.html';
+                }, 3000);
+
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        // Allow Enter key to submit form
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                submitOrder();
+            }
+        });
+
+    </script>
+</body>
+</html>
