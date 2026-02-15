@@ -14,9 +14,9 @@ app.use(express.static('public'));
 
 // Configuration
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = '$2a$10$RzkNTWt2OGWNFnOuzORUTuiBuBUIFgLMefolG1yYCGtXNKui8Lcju';
+const JWT_SECRET = 'mySuperUltraSecretKey_2026';
 const JSONBIN_API_KEY = '6990e76cd0ea881f40bacfeb';
-const JSONBIN_BIN_ID = '$2a$10$RzkNTWt2OGWNFnOuzORUTuiBuBUIFgLMefolG1yYCGtXNKui8Lcju';
+const JSONBIN_BIN_ID = '$2a$10$f8wZt4ClRVU5QfRYapHa3.9OzEo0R4jrX0gR3shYdOr5BZUNmJJwW';
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN_ID}`;
 
 // Initialize users array in JSONBin (run once)
